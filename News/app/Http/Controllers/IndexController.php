@@ -23,9 +23,7 @@ class IndexController extends Controller
     {
         $link_comment = $request->url();
         $newsposts = Post::where('status', '=', 'Publish')->orderByDesc('id')->take(3)->get(); //show new post
-        //show post
         $categories = Category::where('parent_id', null)->get();
-        // $posts = Post::where('');
         // dd(json_decode($categories));
         return view('layouts.template.content', compact('newsposts', 'categories', $newsposts, $categories))
             ->with('link_comment', $link_comment);

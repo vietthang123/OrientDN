@@ -81,7 +81,8 @@ class CategoryController extends Controller
 
     public function showpost(Request $request, $name){
         $link_comment = $request->url();
-        $categories = Category::all();
+        // $categories = Category::all();
+        $categories = Category::where('parent_id', null)->get();
         $category = Category::where('slug', '=', $name)->first();
         $posts = Post::where('status', '=', 'Publish')->get();
         $parent_id = Category::where('slug', $name)->first()->id;

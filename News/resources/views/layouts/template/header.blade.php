@@ -34,18 +34,13 @@
             <li class=""><a href="{{URL::to('/')}}">Home</a></li>
             @if(count($categories) > 0)
               @foreach ($categories as $category)
-                @if($category->parent_id == null)
-                  <!-- class="" data-toggle="dropdown" role="button" -->
                   <li class="dropdown"> <a href="#" aria-expanded="false">{{$category->name}}</a>       
                   <ul class="dropdown-menu" role="menu">
-                    @foreach ($categories as $catedetail)
-                      @if($catedetail->parent_id == $category->id)
-                        <li><a href="/{{ $catedetail->slug }}.html">{{$catedetail->name}}</a></li>
-                      @endif
+                    @foreach ($category->children_categories as $subCategory)
+                        <li><a href="/{{ $subCategory->slug }}.html">{{$subCategory->name}}</a></li>
                      @endforeach
                   </ul>
                   </li>
-                @endif
               @endforeach
             @endif
             <li><a href="{{URL::to('/contact')}}">Contact</a></li>

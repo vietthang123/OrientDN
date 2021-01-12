@@ -196,11 +196,11 @@ class PostController extends Controller
             $category_id = $value->id;
             $parent_id= $value->parent_id;
         }
-        $categories = Category::all();
+        // $categories = Category::all();
+        $categories = Category::where('parent_id', null)->get();
         $similar = Post::with('categories')->where('status', '=', 'Publish')->where('id',$category_id)->get();
         return view('layouts.template.postdetail', compact('post','category','categories','similar',$post,$category,$categories,$similar))
         ->with('link_comment',$link_comment);
-
     }
 
     
