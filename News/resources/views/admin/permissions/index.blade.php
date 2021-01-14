@@ -44,7 +44,7 @@
                                 {{ $permission->id ?? '' }}
                             </td>
                             <td>
-                                {{ $permission->title ?? '' }}
+                                {{ strtolower($permission->title ?? '') }}
                             </td>
                             <td>
                                 @can('permission_show')

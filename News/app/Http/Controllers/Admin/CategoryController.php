@@ -30,7 +30,7 @@ class CategoryController extends Controller
             return response()->view('admin.error.403');
         }
         $parents = Category::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        return view('admin.categories.create', compact('parents'));
+        return view('admin.categories.create', compact('parents'))->with('message', 'Create category successfully!');
     }
 
     public function store(StoreCategoryRequest $request)
@@ -52,7 +52,7 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->update($request->all());
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index')->with('message', 'Update category successfully!');
     }
 
     public function show(Category $category)
@@ -70,13 +70,13 @@ class CategoryController extends Controller
             return response()->view('admin.error.403');
         }
         $category->delete();
-        return back();
+        return back()->with('message', 'Delete category successfully!');
     }
 
     public function massDestroy(MassDestroyCategoryRequest $request)
     {
         Category::whereIn('id', request('ids'))->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT)->with('message', 'Delete category successfully!');
     }
 
     public function showpost(Request $request, $name){

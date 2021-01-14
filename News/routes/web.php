@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/login', function(){
     return view('admin.home');
 });
+
+Route::get('/logout',[LoginController::class, 'logout']);
+
 Route::get('/register', function(){
     return view('auth.register');
 });
@@ -29,8 +32,6 @@ Route::get('/404','IndexController@error_page');
 Route::get('/contact','IndexController@contact');
 Route::get('/{name}.html', [CategoryController::class ,'showpost']);
 Route::get('/{slug}', [PostController::class, 'showpostdetail']);
-
-
 
 Auth::routes();
 

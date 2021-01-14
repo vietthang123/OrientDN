@@ -107,7 +107,7 @@
 @endsection
 
 @section('scripts')
-<script>
+{{-- <script>
     $(document).ready(function () {
   function SimpleUploadAdapter(editor) {
     editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
@@ -230,5 +230,5 @@ Dropzone.options.imageDropzone = {
          return _results
      }
 }
-</script>
+</script> --}}
 @endsection

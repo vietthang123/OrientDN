@@ -73,7 +73,7 @@
             <div class="card-header">
                 {{ trans('global.delete_account') }}
             </div>
-
+            @can('profile_delete')
             <div class="card-body">
                 <form method="POST" action="{{ route("profile.password.destroyProfile") }}" onsubmit="return prompt('{{ __('global.delete_account_warning') }}') == '{{ auth()->user()->email }}'">
                     @csrf
@@ -84,6 +84,7 @@
                     </div>
                 </form>
             </div>
+            @endcan
         </div>
     </div>
 

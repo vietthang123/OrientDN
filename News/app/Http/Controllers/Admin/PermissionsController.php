@@ -28,7 +28,7 @@ class PermissionsController extends Controller
         if(Gate::denies('permission_create')){
             return response()->view('admin.error.403');
         }
-        return view('admin.permissions.create');
+        return view('admin.permissions.create')->with('message', 'Create permission successfully!');
     }
 
     public function store(StorePermissionRequest $request)
@@ -48,7 +48,7 @@ class PermissionsController extends Controller
     public function update(UpdatePermissionRequest $request, Permission $permission)
     {
         $permission->update($request->all());
-        return redirect()->route('admin.permissions.index');
+        return redirect()->route('admin.permissions.index')->with('message', 'Update permission successfully!');
     }
 
     public function show(Permission $permission)
@@ -65,12 +65,12 @@ class PermissionsController extends Controller
             return response()->view('admin.error.403');
         }
         $permission->delete();
-        return back();
+        return back()->with('message', 'Delete permission successfully!');
     }
 
     public function massDestroy(MassDestroyPermissionRequest $request)
     {
         Permission::whereIn('id', request('ids'))->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT)->with('message', 'Delete permission successfully!');
     }
 }

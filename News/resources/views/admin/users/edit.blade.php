@@ -18,22 +18,27 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
             </div>
+
             <div class="form-group">
                 <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
-                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
+                <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" 
+                value="{{ old('email', $user->email) }}" required>
                 @if($errors->has('email'))
                     <span class="text-danger">{{ $errors->first('email') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.email_helper') }}</span>
             </div>
-            <div class="form-group">
+
+            {{-- <div class="form-group">
                 <label class="required" for="password">{{ trans('cruds.user.fields.password') }}</label>
-                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password">
+                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password"
+                 value="{{ old('password', $user->password) }}">
                 @if($errors->has('password'))
                     <span class="text-danger">{{ $errors->first('password') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
-            </div>
+            </div> --}}
+
             <div class="form-group">
                 <div class="form-check {{ $errors->has('approved') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="approved" value="0">

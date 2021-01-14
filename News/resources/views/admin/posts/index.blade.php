@@ -13,8 +13,74 @@
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.post.title_singular') }} {{ trans('global.list') }}
+    </div><br>
+
+    <div class="row col-lg-12">
+        <div class="col-lg-3 col-md-6">
+            <form class="d-flex flex-row">
+                <select class="form-control form-control-sm" id="author_filter" name="author" onchange="filter()">
+                  <option value="">Select author</option>
+                  @foreach ($user as $u)
+                    <option class="form-control" value="{{$u->id}}"
+                    {{(Request::query('author') && Request::query('author')==$u->id)?'selected':''}}
+                    >{{$u->name}}</option>
+                  @endforeach
+                </select>
+                &nbsp;
+                @if(Request::query('author'))
+                  <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}">Reset</a>
+                @endif
+                </form>
+                
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <form class="d-flex flex-row">
+                <select class="form-control form-control-sm" id="category_filter" name="category" onchange="filter()">
+                  <option value="">Select Category</option>
+                  @if(count($categories))
+                    @foreach($categories as $category)
+                      <option value="{{$category->name}}"
+                        {{(Request::query('category') && Request::query('category')==$category->name)?'selected':''}}
+                      >{{$category->name}}
+                      </option>
+                    @endforeach
+                  @endif
+                </select>&nbsp;
+                @if(Request::query('category'))
+                  <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}">Reset</a>
+                @endif
+              </form>
+              
+        </div>
+        <div class="col-lg-3">
+            <form >
+                <input value="{{Request::query('start')}}" {{(Request::query('start'))?'selected':''}}
+                    type="date" id="start_filter" name="start" class="form-control form-control-sm" 
+                    style="width: 150px;" onchange="filter()">
+                <input value="{{Request::query('end')}}" {{(Request::query('end'))?'selected':''}}
+                  type="date" id="end_filter" name="end" class="form-control form-control-sm" 
+                  style="width: 150px;" onchange="filter()">   
+                  &nbsp;
+              @if(Request::query('start') || Request::query('end'))
+                  <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}" style="height: 30px;">Reset</a>
+              @endif                 
+              </form>
+        </div>
+        <div class="col-lg-3">
+            <form class="d-flex flex-row">
+                <select class="form-control form-control-sm" id="status_filter" name="status" onchange="filter()">
+                  <option value="">Select status</option>
+                  <option value="Draft" {{(Request::query('status') && Request::query('status')=='Draft')?'selected':''}}>Draft</option>
+                  <option value="Pending" {{(Request::query('status') && Request::query('status')=='Pending')?'selected':''}}>Pending</option>
+                  <option value="Publish" {{(Request::query('status') && Request::query('status')=='Publish')?'selected':''}}>Publish</option>
+                </select>&nbsp;
+                @if(Request::query('status'))
+                  <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}">Reset</a>
+                @endif
+              </form>
+              
+        </div>
     </div>
-    
     <div class="card-body">
         <div class="table-responsive">
             <table class=" table table-bordered table-striped table-hover datatable datatable-Post">
@@ -55,77 +121,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                    <form class="d-flex flex-row">
-                                    <select class="form-control form-control-sm" id="author_filter" name="author" onchange="filter()">
-                                      <option value="">Select author</option>
-                                      @foreach ($user as $u)
-                                        <option class="form-control" value="{{$u->id}}"
-                                        {{(Request::query('author') && Request::query('author')==$u->id)?'selected':''}}
-                                        >{{$u->name}}</option>
-                                      @endforeach
-                                    </select>
-                                    </form>
-                                    &nbsp;
-                                    @if(Request::query('author'))
-                                      <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}">Reset</a>
-                                    @endif
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <form class="d-flex flex-row">
-                                    <select class="form-control form-control-sm" id="category_filter" name="category" onchange="filter()">
-                                      <option value="">Select Category</option>
-                                      @if(count($categories))
-                                        @foreach($categories as $category)
-                                          <option value="{{$category->name}}"
-                                            {{(Request::query('category') && Request::query('category')==$category->name)?'selected':''}}
-                                          >{{$category->name}}
-                                          </option>
-                                        @endforeach
-                                      @endif
-                                    </select>
-                                  </form>
-                                  &nbsp;
-                                    @if(Request::query('category'))
-                                      <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}">Reset</a>
-                                    @endif
-                            </td>
-                            <td>
-                                <form >
-                                    <input value="{{Request::query('start')}}" {{(Request::query('start'))?'selected':''}}
-                                        type="date" id="start_filter" name="start" class="form-control form-control-sm" 
-                                        style="width: 150px;" onchange="filter()">
-                                    <input value="{{Request::query('end')}}" {{(Request::query('end'))?'selected':''}}
-                                      type="date" id="end_filter" name="end" class="form-control form-control-sm" 
-                                      style="width: 150px;" onchange="filter()">                    
-                                  </form>&nbsp;
-                                  @if(Request::query('start') || Request::query('end'))
-                                      <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}" style="height: 30px;">Reset</a>
-                                  @endif
-                            </td>
-                            <td>
-                                    <form class="d-flex flex-row">
-                                    <select class="form-control form-control-sm" id="status_filter" name="status" onchange="filter()">
-                                      <option value="">Select status</option>
-                                      <option value="Draft" {{(Request::query('status') && Request::query('status')=='Draft')?'selected':''}}>Draft</option>
-                                      <option value="Pending" {{(Request::query('status') && Request::query('status')=='Pending')?'selected':''}}>Pending</option>
-                                      <option value="Publish" {{(Request::query('status') && Request::query('status')=='Publish')?'selected':''}}>Publish</option>
-                                    </select>
-                                  </form>
-                                  &nbsp;
-                                    @if(Request::query('status'))
-                                      <a class="btn btn-success btn-sm" href="{{route('admin.posts.index')}}">Reset</a>
-                                    @endif
-                            </td>
-                            <td></td>
-                            <td></td>
-
-
                     @foreach($posts as $key => $post)
                         <tr data-entry-id="{{ $post->id }}">
                             <td></td>
@@ -182,7 +177,9 @@
 
                                 @can('post_edit')
                                     <a class="btn btn-xs btn-warning" href="{{ route('admin.posts.edit', $post->id) }}">
-                                        {{ trans('global.edit') }}
+                                        {{-- {{ trans('global.edit') }} --}}
+                                        {{-- <i class="fa fa-pencil" aria-hidden="true"></i> --}}
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </a>
                                 @endcan
 
@@ -190,7 +187,7 @@
                                     <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                        <input type="submit" class="btn btn-xs btn-danger " value="{{ trans('global.delete') }}">
                                     </form>
                                 @endcan
                             </td>
@@ -237,6 +234,12 @@
   }
   dtButtons.push(deleteButton)
 @endcan
+
+  $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
+    order: [[ 1, 'desc' ]],
+    pageLength: 100,
+  });
 
   let table = $('.datatable-Post:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

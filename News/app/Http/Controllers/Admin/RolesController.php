@@ -30,7 +30,7 @@ class RolesController extends Controller
         }
         $permissions = Permission::all()->pluck('title', 'id');
         // dd($permissions);
-        return view('admin.roles.create', compact('permissions'));
+        return view('admin.roles.create', compact('permissions'))->with('message', 'Create role successfully!');
     }
 
     public function store(StoreRoleRequest $request)
@@ -56,7 +56,7 @@ class RolesController extends Controller
     {
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
-        return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index')->with('message', 'Update role successfully!');
     }
 
     public function show(Role $role)
@@ -74,12 +74,12 @@ class RolesController extends Controller
             return response()->view('admin.error.403');
         }
         $role->delete();
-        return back();
+        return back()->with('message', 'Delete role successfully!');
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)
     {
         Role::whereIn('id', request('ids'))->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT)->with('message', 'Delete role successfully!');
     }
 }

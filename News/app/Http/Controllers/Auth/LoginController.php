@@ -37,7 +37,11 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        // return redirect('/login');
         return redirect()->route('admin.home');
+    }
+     
+    public function logout(){
+        Auth::logout();
+        return view('auth.login');
     }
 }

@@ -5,7 +5,6 @@
     <div class="card-header">
         {{ trans('global.create') }} {{ trans('cruds.category.title_singular') }}
     </div>
-
     <div class="card-body">
         <form method="POST" action="{{ route("admin.categories.store") }}" enctype="multipart/form-data">
             @csrf
@@ -49,7 +48,4 @@
         </form>
     </div>
 </div>
-
-
-
 @endsection

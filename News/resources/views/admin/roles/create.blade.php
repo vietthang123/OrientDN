@@ -45,7 +45,6 @@
 
                 <!--Category-->
                 <div class="form-group">
-                <label class="required" for="permissions">{{ trans('cruds.role.fields.permissions') }}</label>
                     <div><label for="">Select Category:</label></div>
                     <div style="padding-bottom: 4px">
                         <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>

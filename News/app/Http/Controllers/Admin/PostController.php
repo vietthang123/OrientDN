@@ -76,7 +76,8 @@ class PostController extends Controller
         $users = User::all()->pluck('name', 'id');
         //->prepend(trans('global.pleaseSelect'), '')
         $categories = Category::all()->pluck('name', 'id');
-        return view('admin.posts.create', compact('users', 'categories'));
+        return view('admin.posts.create', compact('users', 'categories'))
+        ->with('message', 'Create post successfully!');
     }
 
     public function store(StorePostRequest $request)
@@ -135,7 +136,7 @@ class PostController extends Controller
         }
         $post->save();
 
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.index')->with('message', 'Update post successfully!');
     }
 
     public function show(Post $post)
@@ -160,13 +161,13 @@ class PostController extends Controller
         }
 
         $post->delete();
-        return back();
+        return back()->with('message', 'Delete post successfully!');
     }
 
     public function massDestroy(MassDestroyPostRequest $request)
     {
         Post::whereIn('id', request('ids'))->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT)->with('message', 'Delete post successfully!');
     }
 
     public function approve(Request $request){
@@ -178,7 +179,8 @@ class PostController extends Controller
         $post->status = 'Publish';
         $post->save();
         $posts = $posts->get();
-        return view('admin.posts.index', compact('user','categories','posts', $user, $categories, $posts));
+        return view('admin.posts.index', compact('user','categories','posts', $user, $categories, $posts))
+        ->with('message', 'Approve post successfully!');
     }
     public function request(Request $request){
         $post = Post::where('id', $request['id'])->first();

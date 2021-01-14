@@ -29,7 +29,7 @@ class UsersController extends Controller
             return response()->view('admin.error.403');
         }
         $roles = Role::all()->pluck('title', 'id');
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles'))->with('message', 'Create user successfully!');
     }
 
     public function store(StoreUserRequest $request)
@@ -53,7 +53,7 @@ class UsersController extends Controller
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('message', 'Update user successfully!');
     }
 
     public function show(User $user)
@@ -71,12 +71,12 @@ class UsersController extends Controller
             return response()->view('admin.error.403');
         }
         $user->delete();
-        return back();
+        return back()->with('message', 'Delete user successfully!');
     }
 
     public function massDestroy(MassDestroyUserRequest $request)
     {
         User::whereIn('id', request('ids'))->delete();
-        return response(null, Response::HTTP_NO_CONTENT);
+        return response(null, Response::HTTP_NO_CONTENT)->with('message', 'Delete user successfully!');
     }
 }
